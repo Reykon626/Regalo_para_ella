@@ -1,0 +1,262 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Para Alison</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            height: 100vh;
+            overflow: hidden;
+            background: linear-gradient(to bottom, #0a0a2a 0%, #1a1a4a 100%);
+            color: white;
+            position: relative;
+        }
+
+        .stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: url('https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/094c37fe-cf80-4888-811f-b0379fe3a233.png') no-repeat center center;
+            background-size: cover;
+        }
+
+        .moon {
+            position: absolute;
+            top: 5%;
+            right: 10%;
+            width: 70px;
+            height: 70px;
+            background: #f5f5dc;
+            border-radius: 50%;
+            box-shadow: 0 0 60px #f5f5dc;
+            z-index: -1;
+        }
+
+        .garden {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            height: 30vh;
+            overflow: hidden;
+            z-index: -1;
+        }
+
+        .flowers {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 5px;
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+        }
+
+        .flower {
+            font-size: 14px;
+            color: #5d8aa8;
+            animation: float 5s infinite ease-in-out;
+        }
+
+        .man-silhouette {
+            position: absolute;
+            left: 5%;
+            bottom: 20vh;
+            width: 100px;
+            height: 200px;
+            background: linear-gradient(transparent 60%, rgba(0,0,0,0.2) 100%);
+            clip-path: polygon(50% 0%, 20% 100%, 80% 100%);
+        }
+
+        .poem-container {
+            position: absolute;
+            right: 5%;
+            left: 5%;
+            top: 50%;
+            transform: translateY(-50%);
+            max-width: 90%;
+            padding: 15px;
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 10px;
+            backdrop-filter: blur(5px);
+        }
+
+        .poem {
+            font-style: italic;
+            line-height: 1.6;
+            text-align: right;
+            font-size: 1rem;
+            padding: 10px;
+        }
+
+        .poem p {
+            margin-bottom: 15px;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .poem {
+                font-size: 0.9rem;
+            }
+            
+            .poem-container {
+                padding: 10px;
+                top: 45%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .poem {
+                font-size: 0.85rem;
+                line-height: 1.5;
+            }
+            
+            .poem p {
+                margin-bottom: 8px;
+            }
+            
+            .moon {
+                top: 3%;
+                right: 5%;
+                width: 50px;
+                height: 50px;
+            }
+            
+            .man-silhouette {
+                height: 150px;
+                bottom: 15vh;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="stars" style="background-image: url('https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/ec435e65-1dfb-4dab-a688-057dd2b38b62.png');" 
+         alt="Estrellas brillantes en un cielo nocturno"></div>
+    
+    <div class="moon"></div>
+    
+    <div class="garden">
+        <div class="flowers" id="flowers">
+            <!-- Flores serán generadas con JavaScript -->
+        </div>
+    </div>
+    
+    <div class="man-silhouette" alt="Silueta de un hombre de pie mirando hacia el horizonte"></div>
+    
+    <div class="poem-container">
+        <div class="poem">
+            <p>No te he abrazado,</p>
+            <p>ni he tomado tu mano,</p>
+            <p>pero hay algo en ti</p>
+            <p>que ya me hace quedarme.</p>
+            <br>
+            <p>No necesito tocarte</p>
+            <p>para saber que me importas,</p>
+            <p>ni besarte</p>
+            <p>para saber que me gustas.</p>
+            <br>
+            <p>Quiero conocerte despacio,</p>
+            <p>sin prisa, sin presión…</p>
+            <p>solo tú y yo,</p>
+            <p>descubriéndonos con confianza</p>
+            <p>y con intención</p>
+        </div>
+    </div>
+
+    <script>
+        // Crear las rosas azules que forman el nombre "Alison"
+        document.addEventListener('DOMContentLoaded', function() {
+            const flowersContainer = document.getElementById('flowers');
+            const name = "Alison";
+            const flowerCount = 100;
+            const nameFlowers = 30;
+            
+            // Crear flores que forman el nombre
+            for (let i = 0; i < nameFlowers; i++) {
+                createFlower(true);
+            }
+            
+            // Crear flores adicionales para el jardín
+            for (let i = 0; i < flowerCount - nameFlowers; i++) {
+                createFlower(false);
+            }
+            
+            function createFlower(isNameFlower) {
+                const flower = document.createElement('div');
+                flower.className = 'flower';
+                
+                // Posición aleatoria
+                const left = Math.random() * 100;
+                const bottom = isNameFlower ? 
+                    Math.max(5, 20 - Math.abs((left - 50)/2)) :  // Formar curva del nombre
+                    Math.random() * 5;
+                
+                flower.style.left = `${left}%`;
+                flower.style.bottom = `${bottom}%`;
+                
+                // Retraso de animación aleatorio
+                flower.style.animationDelay = `${Math.random() * 5}s`;
+                
+                // Solo algunas flores tendrán el símbolo de rosa, otras serán hojas
+                if (Math.random() > 0.3 || isNameFlower) {
+                    flower.innerHTML = '🌹'; // Esto será reemplazado por CSS
+                    flower.style.color = '#5d8aa8'; // Azul claro
+                    flower.style.textShadow = '0 0 5px #add8e6';
+                } else {
+                    flower.innerHTML = '🍃'; // Esto será reemplazado por CSS
+                    flower.style.color = '#2e8b57'; // Verde
+                }
+                
+                flowersContainer.appendChild(flower);
+            }
+            
+            // Sistema de estrellas parpadeantes
+            const stars = document.querySelector('.stars');
+            for (let i = 0; i < 100; i++) {
+                const star = document.createElement('div');
+                star.style.position = 'absolute';
+                star.style.width = `${Math.random() * 3}px`;
+                star.style.height = star.style.width;
+                star.style.backgroundColor = 'white';
+                star.style.borderRadius = '50%';
+                star.style.left = `${Math.random() * 100}%`;
+                star.style.top = `${Math.random() * 70}%`;
+                star.style.opacity = Math.random();
+                star.style.animation = `twinkle ${5 + Math.random() * 5}s infinite`;
+                
+                stars.appendChild(star);
+            }
+            
+            // Añadir animación de parpadeo
+            const style = document.createElement('style');
+            style.innerHTML = `
+                @keyframes twinkle {
+                    0%, 100% { opacity: 0.2; }
+                    50% { opacity: 1; }
+                }
+            `;
+            document.head.appendChild(style);
+        });
+    </script>
+</body>
+</html>
+```
